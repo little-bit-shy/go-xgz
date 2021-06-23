@@ -26,7 +26,7 @@
 ## 初始化脚手架
 
 开发环境要求：docker  
-github.com/little-bit-shy/go-xgz  
+wget -qO- https://get.docker.com/ | sh  
 
 第一步：git clone -b v1.0.0 --depth=1 http://github.com/little-bit-shy/go-xgz.git  
 第二步：cd go && make init
