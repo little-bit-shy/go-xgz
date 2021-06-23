@@ -1,0 +1,84 @@
+#!/bin/bash
+
+RED='\E[0;31m'      # 红
+GREEN='\E[0;32m'    # 绿
+YELOW='\E[0;33m'    # 黄
+BLUE='\E[0;34m'     # 蓝
+RES='\E[0m'         # 清除颜色
+
+LOAD_BLUE='\033[?25l\E[5;34m'     # 蓝闪
+
+sysLog() {
+  echo -e "${BLUE}${1}${RES}"
+}
+
+errLog() {
+  echo -e "${RED}${1}${RES}"
+}
+
+readLog() {
+  echo -en "${BLUE}${1}${RES}"
+}
+
+loadLog() {
+  echo -en "${LOAD_BLUE}${1}${RES}\r"
+}
+
+path=$(
+  cd $(dirname $0)
+  pwd
+)
+name="${path##*/}"
+
+arr=($(head -n 1 ./go.mod))
+oldPack=${arr[1]}
+sysLog "项目初始化"
+sysLog "初始化过程中禁止中断"
+sysLog "旧项目位置为${path}"
+sysLog "旧项目包名为${oldPack}"
+sysLog "当前文件夹为${name}"
+readLog "初始化项目包名（示例：github.com/little-bit-shy/go-xgz）:"
+read newPack
+
+if [ -z ${newPack} ]; then
+  errLog "包名不能为空"
+  exit 255
+fi
+
+loadLog "包名${newPack}检测中..."
+
+if [[ $newPack =~ ^[a-z\.]+(/[a-z_-]+)+[a-z_-]+$ ]]
+then
+    sleep 1
+else
+    errLog "\033[K包名不合法，示例：github.com/little-bit-shy/go-xgz"
+    exit 255
+fi
+
+exits=$(grep ${newPack}/ -rl ./)
+if [ "${exits}" ]; then
+  errLog "\033[K当前包名与项目脚本有冲突"
+  exit 255
+fi
+
+sysLog "\033[K当前包名合法"
+
+loadLog "开始重构项目..."
+rm -rf ./go.mod ./go.sum ./vendor
+sysLog "\033[K开始重构项目..."
+go mod init ${newPack}
+newPack=`echo ${newPack} | sed 's:\/:\\\/:g'`
+sed -i "s:${oldPack}:${newPack}:g" $(grep ${oldPack} -rl ./configs)
+sed -i "s:${oldPack}:${newPack}:g" $(grep ${oldPack}/ -rl ./)
+
+go get github.com/go-kratos/kratos@v1.0.0
+go mod tidy
+go mod vendor
+
+oldPackage=.`echo ${oldPack} | rev | cut -d '/' -f 1 | rev`.
+newPackage=.`echo ${newPack} | rev | cut -d '/' -f 1 | rev`.
+sed -i "s:${oldPackage}:${newPackage}:g" $(grep ${oldPackage} -rl ./api/api.proto)
+bash ./protoc
+
+sysLog "\033[K项目初始化完成"
+

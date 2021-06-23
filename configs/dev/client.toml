@@ -1,0 +1,16 @@
+[Api]
+    AppId = "direct://default/127.0.0.1:9000"
+
+[Pool]
+    Active = 200
+    Idle = 100
+    IdleTimeout = "60s"
+    WaitTimeout = 0
+    Wait = true
+
+[Warden]
+    Dial = "10s"
+    Timeout = "2s"
+    KeepAliveInterval = "1s"
+    KeepAliveTimeout = "1s"
+    KeepAliveWithoutStream = false

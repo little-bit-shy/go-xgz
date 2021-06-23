@@ -1,0 +1,12 @@
+[Server]
+    Addr = "0.0.0.0:8000"
+    Timeout = "5s"
+
+[Bbr]
+    Enabled = true
+    Window = 100000000
+    WinBucket = 5
+    Debug = false
+
+[Keep]
+    keep = "also"

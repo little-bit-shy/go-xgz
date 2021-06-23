@@ -1,0 +1,12 @@
+[Client]
+	Name = "app"
+	Proto = "tcp"
+	Addr = "192.168.18.44:6379"
+	Auth = "Abc123456!"
+	Db = 1
+	Idle = 10
+	Active = 10
+	DialTimeout = "1s"
+	ReadTimeout = "1s"
+	WriteTimeout = "1s"
+	IdleTimeout = "10s"

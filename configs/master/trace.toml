@@ -1,0 +1,6 @@
+[Server]
+    AppID = "github.com/little-bit-shy/go-xgz"
+    Endpoint = "env:JCSP_ZIPKIN_ADDR"
+    BatchSize = 100
+    Timeout = 0
+    DisableSample = true

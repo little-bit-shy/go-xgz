@@ -1,0 +1,14 @@
+[Server]
+    Addr = "0.0.0.0:9000"
+    Timeout = "2s"
+    IdleTimeout = "2s"
+    MaxLifeTime = "1s"
+    ForceCloseWait = "2s"
+    KeepAliveInterval = "3s"
+    KeepAliveTimeout = "1s"
+
+[Bbr]
+    Enabled = true
+    Window = 100000000
+    WinBucket = 5
+    Debug = false

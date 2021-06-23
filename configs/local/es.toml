@@ -1,0 +1,12 @@
+[Client]
+    URL = ["http://192.168.18.149:19200", "http://192.168.18.151:19200"]
+    Sniff = false
+    UserName = "elastic"
+    PassWorld = "H84I4fw6fDgdenuNRgfe"
+
+[Pool]
+    Active = 20
+    Idle = 10
+    IdleTimeout = "60s"
+    WaitTimeout = 0
+    Wait = true

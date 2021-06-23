@@ -1,0 +1,91 @@
+// 注意：参数统一采用"_"拼接，比如ClusterName=cluster_name，且如果RPC服务开放了网关，方法为读是GET为写则为POST
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+package app.framework.v1;
+
+option go_package = "api";
+option (gogoproto.goproto_getters_all) = false;
+option (gogoproto.marshaler_all) = false;
+option (gogoproto.unmarshaler_all) = false;
+option (gogoproto.sizer_all) = false;
+
+// 服务方法
+service App {
+  // ping
+  rpc Ping(.google.protobuf.Empty) returns (.google.protobuf.Empty){
+    option (google.api.http) = {
+      get: "/ping"
+    };
+  };
+  // say
+  rpc Say(HelloReq) returns (SayResp) {
+    option (google.api.http) = {
+      get: "/say"
+    };
+  };
+  // call_self
+  rpc CallSelf(HelloReq) returns (HelloResp) {
+    option (google.api.http) = {
+      get: "/call_self"
+    };
+  };
+}
+
+message HelloReq {
+  string Name = 1 [(gogoproto.moretags) = 'form:"name" validate:"required"'];
+}
+
+message HelloResp {
+  string Content = 1 [(gogoproto.jsontag) = 'content'];
+}
+
+message SayResp {
+  message DbMsg {
+    int64 Id = 1 [(gogoproto.jsontag) = 'id'];
+    string Name = 2 [(gogoproto.jsontag) = 'name'];
+  }
+
+  message EsMsg {
+    string ClusterName = 1 [(gogoproto.jsontag) = 'cluster_name'];
+    string Status = 2 [(gogoproto.jsontag) = 'status'];
+    bool TimedOut = 3 [(gogoproto.jsontag) = 'timed_out'];
+    double NumberOfNodes = 4 [(gogoproto.jsontag) = 'number_of_nodes'];
+    double NumberOfDataNodes = 5 [(gogoproto.jsontag) = 'number_of_data_nodes'];
+    double ActivePrimaryShards = 6 [(gogoproto.jsontag) = 'active_primary_shards'];
+    double ActiveShards = 7 [(gogoproto.jsontag) = 'active_shards'];
+    double RelocatingShards = 8 [(gogoproto.jsontag) = 'relocating_shards'];
+    double InitializingShards = 9 [(gogoproto.jsontag) = 'initializing_shards'];
+    double UnassignedShards = 10 [(gogoproto.jsontag) = 'unassigned_shards'];
+    double DelayedUnassignedShards = 11 [(gogoproto.jsontag) = 'delayed_unassigned_shards'];
+    double NumberOfPendingTasks = 12 [(gogoproto.jsontag) = 'number_of_pending_tasks'];
+    double NumberOfInFlightFetch = 13 [(gogoproto.jsontag) = 'number_of_in_flight_fetch'];
+    string TaskMaxWaitingInQueue = 14 [(gogoproto.jsontag) = 'task_max_waiting_in_queue'];
+    double TaskMaxWaitingInQueueMillis = 15 [(gogoproto.jsontag) = 'task_max_waiting_in_queue_millis'];
+    string ActiveShardsPercent = 16 [(gogoproto.jsontag) = 'active_shards_percent'];
+    double ActiveShardsPercentAsNumber = 17 [(gogoproto.jsontag) = 'active_shards_percent_as_number'];
+  }
+
+  message JrpcMsg {
+    string Jsonrpc = 1 [(gogoproto.jsontag) = 'jsonrpc'];
+    map<string, language> Result = 2 [(gogoproto.jsontag) = 'result'];
+
+    message language {
+      string En = 1 [(gogoproto.jsontag) = 'en'];
+    }
+  }
+
+  message CallSelfMsg {
+    string Content = 1 [(gogoproto.jsontag) = 'content'];
+  }
+
+  DbMsg Db = 1 [(gogoproto.jsontag) = 'db'];
+  EsMsg Es = 2 [(gogoproto.jsontag) = 'es'];
+  string Redis = 3 [(gogoproto.jsontag) = 'redis'];
+  JrpcMsg Jrpc = 4 [(gogoproto.jsontag) = 'jrpc'];
+  CallSelfMsg Client = 5 [(gogoproto.jsontag) = 'client'];
+  repeated bytes Hbase = 6 [(gogoproto.jsontag) = 'hbase'];
+}

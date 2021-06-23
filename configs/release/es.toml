@@ -1,0 +1,12 @@
+[Client]
+    URL = "env:JCSP_ES_ADDR"
+    Sniff = false
+    UserName = "env:JCSP_ES_USERNAME"
+    PassWorld = "env:JCSP_ES_PWD"
+
+[Pool]
+    Active = 20
+    Idle = 10
+    IdleTimeout = "60s"
+    WaitTimeout = 0
+    Wait = true

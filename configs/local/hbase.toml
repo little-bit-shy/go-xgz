@@ -1,0 +1,16 @@
+[Logrus]
+    Enable = false
+
+[Client]
+    RPCQueueSize = 10
+
+[Zookeeper]
+    Addrs = ["192.168.18.148:2181","192.168.18.149:2181","192.168.18.150:2181"]
+    Timeout = "2s"
+
+[Pool]
+    Active = 20
+    Idle = 10
+    IdleTimeout = "60s"
+    WaitTimeout = 0
+    Wait = true

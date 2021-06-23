@@ -1,0 +1,12 @@
+[Dict]
+    Timeout = "3s"
+    Network = "tcp"
+    Address = "127.0.0.1:18307"
+    Interface = "Jcsp\\Service\\Data\\Dict\\Contract\\DictInterface"
+
+[DictPool]
+    Active = 20
+    Idle = 10
+    IdleTimeout = "60s"
+    WaitTimeout = 0
+    Wait = true

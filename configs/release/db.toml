@@ -1,0 +1,11 @@
+[Client]
+	Addr = "env:JCSP_MYSQL_ADDR"
+	DSN = "env:JCSP_MYSQL_DSN"
+	ReadDSN = "env:JCSP_MYSQL_READ_DSN"
+	Db = "test"
+	Active = 20
+	Idle = 10
+	IdleTimeout ="4h"
+	QueryTimeout = "200ms"
+	ExecTimeout = "300ms"
+	TranTimeout = "400ms"

@@ -1,0 +1,6 @@
+[Server]
+    AppID = "github.com/little-bit-shy/go-xgz"
+    Endpoint = "http://localhost:9411/api/v2/spans"
+    BatchSize = 100
+    Timeout = 0
+    DisableSample = true

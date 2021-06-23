@@ -1,0 +1,12 @@
+[Client]
+	Name = "app"
+	Proto = "tcp"
+	Addr = "env:JCSP_REDIS_ADDR"
+	Auth = "env:JCSP_REDIS_PASSWORD"
+	Db = 1
+	Idle = 10
+	Active = 10
+	DialTimeout = "1s"
+	ReadTimeout = "1s"
+	WriteTimeout = "1s"
+	IdleTimeout = "10s"

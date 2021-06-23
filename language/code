@@ -1,0 +1,22 @@
+0=OK
+-304=NotModified
+-307=TemporaryRedirect
+-400=RequestErr
+-401=Unauthorized
+-403=AccessDenied
+-404=NothingFound
+-405=MethodNotAllowed
+-409=Conflict
+-498=Canceled
+-500=ServerErr
+-503=ServiceUnavailable
+-504=Deadline
+-509=LimitExceed
+
+-1000=MysqlError
+-1001=HbaseError
+-1002=RedisError
+-1003=ElasticsearchError
+-1004=JrpcError
+
+-10000=Call self error

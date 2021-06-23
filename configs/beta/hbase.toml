@@ -1,0 +1,16 @@
+[Logrus]
+    Enable = false
+
+[Client]
+    RPCQueueSize = 10
+
+[Zookeeper]
+    Addrs = "env:JCSP_ZK_ADDR"
+    Timeout = "2s"
+
+[Pool]
+    Active = 20
+    Idle = 10
+    IdleTimeout = "60s"
+    WaitTimeout = 0
+    Wait = true

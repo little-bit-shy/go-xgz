@@ -1,0 +1,4 @@
+#!/bin/bash
+
+kratos tool wire ./internal/dao
+kratos tool wire ./internal/di

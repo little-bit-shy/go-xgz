@@ -1,0 +1,11 @@
+[Client]
+	Addr = "192.168.18.43:3306"
+	DSN = "root:Abc123456!@tcp(192.168.18.43:3306)/{db}?timeout=1s&readTimeout=1s&writeTimeout=1s&parseTime=true&loc=Local&charset=utf8mb4,utf8"
+	ReadDSN = ["root:Abc123456!@tcp(192.168.18.43:3306)/{db}?timeout=1s&readTimeout=1s&writeTimeout=1s&parseTime=true&loc=Local&charset=utf8mb4,utf8"]
+	Db = "test"
+	Active = 20
+	Idle = 10
+	IdleTimeout ="4h"
+	QueryTimeout = "200ms"
+	ExecTimeout = "300ms"
+	TranTimeout = "400ms"

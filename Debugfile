@@ -1,0 +1,12 @@
+FROM debug:1.0.0
+
+ARG ENV
+
+COPY ./Shanghai /etc/localtime
+
+WORKDIR /data
+
+EXPOSE 8000
+EXPOSE 9000
+
+CMD ["/bin/bash"]

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+proto_path=/root/go/src
+third_proto_path=/root/go/pkg/mod/github.com/go-kratos/kratos@v1.0.0/third_party
+
+protoc --proto_path=${proto_path} --proto_path=${third_proto_path} --proto_path=./api --bm_out=:./api api.proto
+protoc --proto_path=${proto_path} --proto_path=${third_proto_path} --proto_path=./api --gofast_out=plugins=grpc:./api api.proto
+# The format may be one of the built-in ones ( docbook, html, markdown or json) or the name of a file containing a custom Go template.
+protoc --plugin=protoc-gen-doc=/root/go/bin/protoc-gen-doc --proto_path=${third_proto_path} --proto_path=./api --doc_out=./   --doc_opt=markdown,doc.md   ./api/*.proto
