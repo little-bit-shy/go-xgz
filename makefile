@@ -1,6 +1,14 @@
 dir = $(shell pwd)
 package = $(shell head -n 1 ./go.mod|cut -d ' ' -f 2 | rev | cut -d '/' -f 1 | rev)
+dockerfile = ./Debugfile
 version = 1.0.0
+
+debug = debug:1.0.0
+debugDockerfile = ./docker/go/Dockerfile
+zipkin = openzipkin/zipkin:2
+zipkin_name = zipkin
+jaeger = jaegertracing/all-in-one:1.22.0
+jaeger_name = jaeger
 
 work = /data
 go_path = /root/go
@@ -15,10 +23,27 @@ define rm
 	if [ -n "$(shell docker ps -a -f "name=$(1)"| grep $(1) | cut -d ' ' -f 1)" ]; then docker rm $(1); fi
 endef
 
+define build
+	if [ ! -n "$(shell docker images -q $(1))" ]; then docker build --network host -t $(1) -f $(2) . || make build; fi
+endef
+
+define pull
+	if [ ! -n "$(shell docker images -q $(1))" ]; then docker pull $(1) || make build; fi
+endef
+
+.PHONY:clear
+clear:
+	$(call rm, $(package))
+	$(call rm, $(zipkin_name))
+	$(call rm, $(jaeger_name))
+	docker image prune -a -f
+
 .PHONY:build
 build:
-	docker build --network host -t debug:1.0.0 -f ./docker/go/Dockerfile .
-	docker build --network host -t $(package):$(version) -f ./Debugfile .
+	$(call pull, $(zipkin))
+	$(call pull, $(jaeger))
+	$(call build, $(debug), $(debugDockerfile))
+	$(call build, $(package):$(version), $(dockerfile))
 
 .PHONY:init
 init:
@@ -33,7 +58,7 @@ init:
 	make build
 
 .PHONY:bash
-bash:
+bash: build
 	$(call rm, $(package))
 	docker run -it --name $(package) --net host \
 	-v $(dir):$(work) \
@@ -108,12 +133,14 @@ wire:
 
 .PHONY:zipkin
 zipkin:
-	$(call rm, "zipkin")
-	docker run -d --name zipkin --net host openzipkin/zipkin:2
+	$(call rm, $(zipkin_name))
+	docker run -d --name $(zipkin_name) \
+	--net host \
+	$(zipkin)
 
 .PHONY:jaeger
 jaeger:
-	$(call rm, "jaeger")
-	docker run --name jaeger \
+	$(call rm, $(jaeger_name))
+	docker run --name $(jaeger_name) \
 	--net host \
-	jaegertracing/all-in-one:1.22.0
+	$(jaeger)

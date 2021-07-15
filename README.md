@@ -1,4 +1,4 @@
-# micro server demo
+# go-xgz
 
 ## 项目简介
 
@@ -8,7 +8,7 @@
 
 通讯容器：make bash  
 拉取镜像建立容器：make build  
-初始化脚手架：make init  
+初始化脚手架：make init
 清除依赖：make clean  
 依赖更新：make mod  
 依赖检查：make tidy  
@@ -18,6 +18,7 @@
 运行脚手架：make run  
 运行zipkin：make zipkin  
 运行jaeger：make jaeger  
+清除所有未使用的镜像（当前项目如果运行中会被关闭并清除）：make clear
 
 ## 文档
 
@@ -58,7 +59,7 @@ INFO 06/24-08:28:44.711 /data/vendor/github.com/go-kratos/kratos/pkg/net/http/bl
 [warden] config is Deprecated, argument will be ignored. please use -grpc flag or GRPC env to configure warden server.
 INFO 06/24-08:28:44.712 /data/pkg/rpc/warden/server.go:329 warden: start grpc listen addr: [::]:9000
 ```
-第四步：curl http://127.0.0.1:8000/call_self?name=xuguozhi  
+测试方法：curl http://127.0.0.1:8000/call_self?name=xuguozhi  
 ```shell
 {
     "code": 0,
@@ -69,7 +70,7 @@ INFO 06/24-08:28:44.712 /data/pkg/rpc/warden/server.go:329 warden: start grpc li
     }
 }
 ```
-第五步：curl http://127.0.0.1:8000/say?name=xuguozhi  
+测试方法：curl http://127.0.0.1:8000/say?name=xuguozhi  
 ```shell
 {
     "code":0,
@@ -80,12 +81,12 @@ INFO 06/24-08:28:44.712 /data/pkg/rpc/warden/server.go:329 warden: start grpc li
     }
 }
 ```
-第六步：其他  
+测试方法：其他  
 ```shell
 curl http://127.0.0.1:8000/metadata
 curl http://127.0.0.1:8000/debug/pprof
 curl http://127.0.0.1:8000/metrics
 ```
-第七步：链路跟踪  
+链路：默认使用Zipkin  
 浏览器打开：http://127.0.0.1:9411  
 ![avatar](./readme/zipkin.png)  
